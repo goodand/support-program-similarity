@@ -1,0 +1,58 @@
+{
+  "selection": "Qwen3-Embedding-8B instructed weighted-window mean + Qwen3-Reranker-0.6B top20",
+  "selection_policy": "Breadth and transfer evidence first; minimum K and MAP within comparable evidence. Not a claim of best scalar score across incompatible experiments.",
+  "queries": 13,
+  "candidate_documents": 140,
+  "known_positive_pairs": 19,
+  "MAP": 0.56743524993525,
+  "MRR": 0.5869930069930069,
+  "K_all": 27,
+  "recall": {
+    "10": 0.6923076923076923,
+    "20": 0.8846153846153846,
+    "27": 1.0,
+    "30": 1.0
+  },
+  "verification": {
+    "all_cosine_rankings_reproduced": true,
+    "all_reranked_rankings_reproduced": true,
+    "metrics_reproduced": true,
+    "fresh_GPU_inference": false
+  },
+  "source_hashes": {
+    "corpus.json": "5b6326aa891b6ed9c3467416ae06a5c435ac5f4e78760d0d1eb70d9fb2e10e36",
+    "pairs.json": "766ab66fa32f607a55d08884460463de960ba230bb2ce46323055adde4a1dc42",
+    "run.py": "fa3d86db5afbd63ec63fdd7f68126ff65a09891f4cf339f6c6dfdb5cc863af83",
+    "qwen_only_reranker.py": "28888f3bcf076f66b1d3e20816a921e432037767071f97aa84cc0a3f69e4cb4c",
+    "qwen_only_reranker_scores.json": "59b276e556d2c42a969b9ade4bec36f8fcfd1fa78c356c4a59f4f618d6f12c8c"
+  },
+  "limitations": [
+    "Known positives incomplete.",
+    "13-query integrated experiment includes seven newer queries in addition to six earlier queries.",
+    "Separate reverse-transfer trial reuses old documents/labels and uses a different candidate pool.",
+    "No independently held-out unseen-business generalization claim.",
+    "Input chunk provenance remains external; this package starts from prepared program text.",
+    "Highest full-corpus MAP is not guaranteed; selection includes robustness evidence."
+  ],
+  "reranker_revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473",
+  "unicode_safe_release_verification": {
+    "MAP": 0.56743524993525,
+    "MRR": 0.5869930069930069,
+    "all_positive_min_k": 27,
+    "changed_rankings": 3,
+    "reembedded_documents": 4,
+    "new_reranked_pairs": 0,
+    "preserved_originals": 153,
+    "recall": {
+      "10": 0.6923076923076923,
+      "20": 0.8846153846153846,
+      "27": 1.0,
+      "30": 1.0
+    }
+  },
+  "review": {
+    "cli": "gpt-6-sol / low; publication bypass finding fixed; token-window finding fixed; manual query prompt verified against local snapshot",
+    "subagent": "gpt-6.1-sol / low; no further blocking findings; reviewed corrected windows",
+    "tests_passed": 11
+  }
+}
