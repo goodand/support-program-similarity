@@ -4,7 +4,7 @@ import subprocess
 from pathlib import PurePosixPath
 
 ROOTS = {'support_program_similarity', 'tests', 'examples', 'tools', 'release', '.github'}
-ROOT_FILES = {'.gitignore', 'README.md', 'requirements.txt', 'requirements-inference.txt'}
+ROOT_FILES = {'.gitignore', 'README.md', 'HANDOFF.md', 'requirements.txt', 'requirements-inference.txt'}
 PUBLIC_JSON = {'examples/rankings.synthetic.json', 'examples/positives.synthetic.json', 'release/selection.json'}
 PRIVATE_DIRS = {'raw', 'runs', 'data', 'models', '__pycache__', '.git'}
 FORBIDDEN = {'.hwp', '.hwpx', '.pdf', '.xls', '.xlsx', '.xlsm', '.xlsb', '.xlt', '.xltx', '.xltm', '.xla', '.xlam',
@@ -59,3 +59,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
