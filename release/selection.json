@@ -1,74 +1,430 @@
 {
-  "selection": "Qwen3-Embedding-8B instructed weighted-window mean + Qwen3-Reranker-0.6B top20",
-  "selection_policy": "Breadth and transfer evidence first; minimum K and MAP within comparable evidence. Not a claim of best scalar score across incompatible experiments.",
+  "checked_on": "2026-10-20",
+  "selection": "GPT-6.1-Sol / low; task-only generative top30 ranking with literal-quote validation and quote-only repair",
+  "selection_changed": true,
+  "previous_selection": "Qwen3-Embedding-8B instructed weighted-window mean + Qwen3-Reranker-0.6B top20",
+  "selection_policy": "First select the largest completed comparable forward evaluation within the connected project experiment families. Compare K_all, then MAP and repeat/transfer evidence on the same inputs. Both verified low-effort runs outperform the historical Qwen selection; report both runs and their mean/range rather than selecting the best repeat alone.",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "top_k": 30,
   "queries": 13,
   "candidate_documents": 140,
   "known_positive_pairs": 19,
-  "MAP": 0.56743524993525,
-  "MRR": 0.5869930069930069,
-  "K_all": 27,
-  "recall": {
-    "10": 0.6923076923076923,
-    "20": 0.8846153846153846,
-    "27": 1,
-    "30": 1
-  },
-  "verification": {
-    "all_cosine_rankings_reproduced": true,
-    "all_reranked_rankings_reproduced": true,
-    "metrics_reproduced": true,
-    "fresh_GPU_inference": false
-  },
-  "source_hashes": {
-    "corpus.json": "5b6326aa891b6ed9c3467416ae06a5c435ac5f4e78760d0d1eb70d9fb2e10e36",
-    "pairs.json": "766ab66fa32f607a55d08884460463de960ba230bb2ce46323055adde4a1dc42",
-    "run.py": "fa3d86db5afbd63ec63fdd7f68126ff65a09891f4cf339f6c6dfdb5cc863af83",
-    "qwen_only_reranker.py": "28888f3bcf076f66b1d3e20816a921e432037767071f97aa84cc0a3f69e4cb4c",
-    "qwen_only_reranker_scores.json": "59b276e556d2c42a969b9ade4bec36f8fcfd1fa78c356c4a59f4f618d6f12c8c"
-  },
-  "limitations": [
-    "Known positives incomplete.",
-    "13-query integrated experiment includes seven newer queries in addition to six earlier queries.",
-    "Separate reverse-transfer trial reuses old documents/labels and uses a different candidate pool.",
-    "No independently held-out unseen-business generalization claim.",
-    "Input chunk provenance remains external; this package starts from prepared program text.",
-    "Highest full-corpus MAP is not guaranteed; selection includes robustness evidence."
-  ],
-  "reranker_revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473",
-  "unicode_safe_release_verification": {
-    "MAP": 0.56743524993525,
-    "MRR": 0.5869930069930069,
-    "all_positive_min_k": 27,
-    "changed_rankings": 3,
-    "reembedded_documents": 4,
-    "new_reranked_pairs": 0,
-    "preserved_originals": 153,
-    "recall": {
-      "10": 0.6923076923076923,
-      "20": 0.8846153846153846,
-      "27": 1,
+  "metrics": {
+    "aggregation": "Two executions of the same 13-query evaluation; unweighted arithmetic mean across runs. Repeat runs do not increase the independent query or relation counts.",
+    "repeat_count": 2,
+    "MAP@30": {
+      "mean": 0.8190628815628815,
+      "min": 0.8158119658119658,
+      "max": 0.8223137973137973
+    },
+    "MRR@30": {
+      "mean": 0.9,
+      "min": 0.9,
+      "max": 0.9
+    },
+    "K_all": {
+      "min": 8,
+      "max": 10
+    },
+    "recall_each_run": {
+      "10": 1,
+      "20": 1,
       "30": 1
+    },
+    "full_AP_equals_AP_at_30_for_known_positives": true,
+    "best_repeat_only_selected": false,
+    "independent_holdout_evaluation_performed": false,
+    "unique_query_count_across_repeats": 13
+  },
+  "replayed_runs": [
+    {
+      "run": "gpt61_low",
+      "queries": 13,
+      "candidates": 140,
+      "known_positive_pairs": 19,
+      "MAP@30": 0.8158119658119658,
+      "MRR@30": 0.9,
+      "K_all": 10,
+      "recall": {
+        "10": 1,
+        "20": 1,
+        "30": 1
+      },
+      "literal_quotes_checked": 130,
+      "accepted_prediction_sha256": "ab41db2aabf46f26942a755ea40baec4d9dd5947d5c0b184c86271187b8aefb0",
+      "metrics_reproduced": true,
+      "end_gate_revalidated": true
+    },
+    {
+      "run": "gpt61_low_repeat02",
+      "queries": 13,
+      "candidates": 140,
+      "known_positive_pairs": 19,
+      "MAP@30": 0.8223137973137973,
+      "MRR@30": 0.9,
+      "K_all": 8,
+      "recall": {
+        "10": 1,
+        "20": 1,
+        "30": 1
+      },
+      "literal_quotes_checked": 130,
+      "accepted_prediction_sha256": "302cea2afb97735b1040e3cb6769a34bd9e7e1310c70943148fe3cc4538a773d",
+      "metrics_reproduced": true,
+      "end_gate_revalidated": true
     }
+  ],
+  "verification": {
+    "basis": "Offline reconstruction and metric calculation from stored private inputs, initial requests and accepted predictions; not a fresh model run.",
+    "input_checks": {
+      "original_texts_preserved": 153,
+      "names_matched": true,
+      "exclusion_sets_matched": 13,
+      "reviewed_pairs_subset_of_integrated": true
+    },
+    "initial_requests": {
+      "gpt61_low": {
+        "exact_allowlisted_input": true,
+        "tool_free": true,
+        "no_previous_response_id": true,
+        "initial_prompt_sha256": "565dcc5f889e769777c9d9575d09948ef861118b3deaba7b30ebde19d091af39"
+      },
+      "gpt61_low_repeat02": {
+        "exact_allowlisted_input": true,
+        "tool_free": true,
+        "no_previous_response_id": true,
+        "initial_prompt_sha256": "565dcc5f889e769777c9d9575d09948ef861118b3deaba7b30ebde19d091af39"
+      }
+    },
+    "initial_prompt_model_reasoning_schema_identical_across_repeats": true,
+    "literal_quotes_checked_total": 260,
+    "quote_repair": {
+      "rankings_unchanged": true,
+      "non_quote_fields_unchanged": true,
+      "changed_quote_fields": 1,
+      "run": "gpt61_low_repeat02"
+    },
+    "metrics_reproduced_for_both_repeats": true,
+    "end_gate_revalidated_for_both_repeats": true,
+    "structure_and_literal_quotes_prove_semantic_accuracy": false,
+    "fresh_model_service_inference_calls": 0,
+    "fresh_GPU_inference": false,
+    "historical_frozen_input_order_preserved": true,
+    "public_prepared_input_equals_historical": true,
+    "public_schema_equals_historical": true,
+    "public_prompt_equals_historical": true,
+    "public_prompt_matches_historical_when_frozen_input_order_preserved": true,
+    "saved_predictions_pass_public_validator": true,
+    "repeat02_initial_quote_error_detected_by_public_validator": true,
+    "repeat02_final_quote_only_repair_passes_public_validator": true,
+    "public_generative_code_sha256_at_replay_validation": "9e161b244345bea246f7a3ada8211c6f8a75c3dde61db9d168a0644db0966c58"
   },
-  "review": {
-    "cli": "gpt-6-sol / low; publication bypass finding fixed; token-window finding fixed; manual query prompt verified against local snapshot",
-    "subagent": "gpt-6.1-sol / low; no further blocking findings; reviewed corrected windows",
-    "tests_passed": 11,
-    "scope": "Historical initial-publication review; current source checks are recorded under refresh_verification."
+  "source_sha256": {
+    "corpus": "5b6326aa891b6ed9c3467416ae06a5c435ac5f4e78760d0d1eb70d9fb2e10e36",
+    "known_positives": "766ab66fa32f607a55d08884460463de960ba230bb2ce46323055adde4a1dc42",
+    "self_exclusions": "880f4cc12f26316de9f9d3e27b7ecfb29fac5fd14f649acdc69b28047a309837",
+    "blinded_queries": "e883f3f19ec3fbe1ab91d6ed8f1d6cd8857163ddfd41b279c7af4cbeaaa60944",
+    "blinded_candidates": "6c055d6a25351d035def5da2c50dabf8f323e41a470276e8f5cb0a131e7b9b5c",
+    "id_mapping": "0335d6f8d48b9f0ebae10d0436cfb6bf0632b44738e2013d43c703ad6739522e",
+    "original_runner": "f3ee3b327a2ee055c2d21a6b1a464e8def80701a484565c46f4d1c9c9bce57df",
+    "original_evaluator": "e64f4fefd04643ad5827183f95d308f4497fa6b595577d3d9e1b0d7dcf5acaed",
+    "evaluation_results": "823b23ba6d709e28bf910508301772c85e8c4bb079b13f2a343d24ba55489146",
+    "output_schema": "b30b148941c48209dea06e0feb833133af13807a26e769dcc77ffb4a7f2a58ec",
+    "first_prediction": "ab41db2aabf46f26942a755ea40baec4d9dd5947d5c0b184c86271187b8aefb0",
+    "repeat_prediction": "302cea2afb97735b1040e3cb6769a34bd9e7e1310c70943148fe3cc4538a773d"
   },
-  "refresh_verification": {
-    "checked_on": "2026-10-20",
-    "basis": "Same-sample replay from saved private vectors, reranker scores and rankings with the current public evaluator.",
+  "comparison_file_sha256": {
+    "reviewed": "92a209fe9d708f1244b2ed0c004134b7cd8842b9a05f22221ef8defe78e134ab",
+    "integrated": "d09db4a14624155f423a9f483a4a49b44ae206f62cb52c17509a1adedfa96ae3",
+    "raw_dot": "5690f7607d9c9302e812ae619dfe6cbc5406312e6a0e11baf4ad03c8add4fc2f",
+    "rank_complementarity": "53220b70786161684af999d489603dcf9c24e8cc18531b82d69c570fe3f51f55",
+    "window_scoring": "4dfb3e9f5e43d5eac75cf75a665388775a03a157f00f406c697e19e48a380f8c",
+    "appendix_ablation": "c3bad3d67fc9a18606c9c913a9c407a048d25f6cc3494b7e118546aa9874aa69",
+    "aspect": "dc74c3d9f7f64d80b061e50ebb320d9de992e248aa60298b8312867280c1aa32",
+    "beneficiary": "58f1d52317b47b1c1faf4080d30d13870a379247df51b6a9e89ae38b0cb7869e",
+    "reverse_reuse": "631c5a565544cf7436e13536fdae27a4e683eccb3003066b1f0eaf6c8521f448",
+    "chunking": "f3719977f8f0c2628b0f1110e3a4ff3b2e96f1e07e8d601c94d3e82d99c68a79",
+    "reciprocal": "821d6eacbbe84dc031fe769f342dff24e3949a453a66a4af830ce6d0ee086a3d",
+    "guardrails": "a20e5f1ad4d3059c9a4edeabd0c8fa8337fa25cc84fc44dcd144a50e94c68d1f",
+    "fixed_top30_v1": "df8d8f0cdefef0bd2aaea367f0111e5db170b8212959adcb663c8c48bf08ac34",
+    "partial_instruction_top30_v1": "2f89b68bb76a4506ebd69fa5ab20e53fcf8c7d1d34c46c85e8955cdd1fd40131",
+    "reranker_repeat_top30_v1": "df8d8f0cdefef0bd2aaea367f0111e5db170b8212959adcb663c8c48bf08ac34",
+    "reverse_top30_v1": "8901f727716861e9c46ded807870c10fcde1d399d5982fa0059bb1cdb8cf4b62",
+    "ontology": "b481409e6d5752ec12187cff159a83cee4ae35e6c553e50acecd7866fdd03a84"
+  },
+  "experiment_inventory": {
+    "status": "connected_project_evaluation_families_checked",
+    "scope": "Linked completed forward evaluation families reachable from this project and its experiment references; not a census of the workstation or unrelated projects.",
+    "largest_completed_comparable_forward_sample": {
+      "queries": 13,
+      "candidate_documents": 140,
+      "known_positive_pairs": 19
+    },
+    "reviewed_subset": {
+      "queries": 7,
+      "candidate_documents": 140,
+      "known_positive_pairs": 9,
+      "subset_of_integrated": true
+    },
+    "checked_families": [
+      "reviewed and integrated model comparisons",
+      "normalization and raw cosine/dot comparison",
+      "rank complementarity and reciprocal ranking",
+      "Qwen/reranker RRF60 and keep-top10 reranking guardrails",
+      "window scoring and appendix ablation",
+      "purpose/body and beneficiary extraction",
+      "chunking comparison with 27 result entries including existing references",
+      "follow-up retrieval learning hypotheses",
+      "structured extraction model evaluation",
+      "ontology comparison",
+      "reverse-direction relation reuse"
+    ],
+    "hash_scope": "comparison_file_sha256 records the verified comparison files supplied for this publication. Family inventory is broader than that hash list; no hash is inferred for unlisted follow-up files.",
+    "follow_up_learning_and_ontology_sample": {
+      "queries": 13,
+      "candidate_documents": 140,
+      "known_positive_pairs": 19
+    },
+    "reverse_reuse": {
+      "queries": 19,
+      "candidate_unique_original_texts": 152,
+      "pairs": 19,
+      "reuses_same_19_relations": true,
+      "different_candidate_pool": true,
+      "independent_larger_forward_sample": false
+    },
+    "non_evaluation_counts": {
+      "source_document_audit": {
+        "source_files": 558,
+        "counts_as_evaluated_model_queries": false
+      },
+      "structured_label_preparation": {
+        "scoped_pair_records": 184,
+        "input_linked_ready_rows": 0,
+        "counts_as_evaluated_model_queries": false
+      }
+    },
+    "all_workstation_experiments_censused": false,
+    "chunking_result_entries_including_references": 27
+  },
+  "same_sample_comparison": {
     "queries": 13,
     "candidate_documents": 140,
     "known_positive_pairs": 19,
-    "comparable_integrated_configurations": 7,
-    "selection_unchanged": true,
-    "source_hashes_matched": 5,
-    "unicode_safe_rankings_reproduced": true,
-    "metrics_reproduced": true,
-    "fresh_GPU_inference": false,
-    "method_comparison": {
+    "metric_scope": "MAP@30 and MRR@30. For rows with finite K_all <= 30, full known-positive AP/MAP equals AP@30/MAP@30. A top30 miss does not establish a finite full-ranking K_all.",
+    "rows": [
+      {
+        "method": "GPT-6.1-Sol / low, first run",
+        "MAP@30": 0.8158119658119658,
+        "MRR@30": 0.9,
+        "K_all": 10,
+        "recall_at_10": 1,
+        "verification": "recomputed_from_saved_predictions",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "GPT-6.1-Sol / low, second run",
+        "MAP@30": 0.8223137973137973,
+        "MRR@30": 0.9,
+        "K_all": 8,
+        "recall_at_10": 1,
+        "verification": "recomputed_from_saved_predictions",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "GPT-6.1-Sol / high",
+        "MAP@30": 0.8048562548562549,
+        "MRR@30": 0.8615384615384615,
+        "K_all": 11,
+        "recall_at_10": 0.9615384615384616,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "GPT-6-Sol / high",
+        "MAP@30": 0.7502622377622378,
+        "MRR@30": 0.823076923076923,
+        "K_all": null,
+        "K_all_status": "not_all_known_positives_recovered_within_top_30; full-ranking finite K_all not established",
+        "recall_at_10": 0.8461538461538461,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": false
+      },
+      {
+        "method": "purpose/body extraction",
+        "MAP@30": 0.6705742974973744,
+        "MRR@30": 0.7097069597069597,
+        "K_all": 26,
+        "recall_at_10": 0.8846153846153846,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "Qwen/reranker RRF60 guardrail",
+        "MAP@30": 0.5863367401828941,
+        "MRR@30": 0.6143648018648018,
+        "K_all": 18,
+        "recall_at_10": 0.7307692307692307,
+        "recall_at_20": 1.0,
+        "recall_at_30": 1.0,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "reciprocal weak",
+        "MAP@30": 0.5822802197802198,
+        "MRR@30": 0.63003663003663,
+        "K_all": 21,
+        "recall_at_10": 0.8076923076923077,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "fixed top30 rerank",
+        "MAP@30": 0.5742468315997727,
+        "MRR@30": 0.5879120879120879,
+        "K_all": 21,
+        "recall_at_10": 0.7692307692307693,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "historical Qwen + Qwen Reranker 0.6B",
+        "MAP@30": 0.56743524993525,
+        "MRR@30": 0.5869930069930069,
+        "K_all": 27,
+        "recall_at_10": 0.6923076923076923,
+        "verification": "recomputed_from_saved_vectors_reranker_scores_and_rankings",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "keep_qwen_top10_rerank11_30",
+        "MAP@30": 0.5511518710048121,
+        "MRR@30": 0.592948717948718,
+        "K_all": 18,
+        "recall_at_10": 0.8076923076923077,
+        "recall_at_20": 1.0,
+        "recall_at_30": 1.0,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "cosine/dot rank alternation, cosine first",
+        "MAP@30": 0.5486158768767465,
+        "MRR@30": 0.5963369963369963,
+        "K_all": 23,
+        "recall_at_10": 0.7692307692307693,
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      },
+      {
+        "method": "Jina early256 / max-pair",
+        "MAP@30": 0.44214837450131567,
+        "K_all": 22,
+        "recall_at_10": 0.7307692307692307,
+        "MRR_status": "not separately verified for this summary",
+        "verification": "stored_aggregate_cross_check",
+        "full_AP_equals_AP_at_30_for_known_positives": true
+      }
+    ],
+    "additional_traditional_guardrail": {
+      "smallest_observed_K_all": 18,
+      "verification": "stored_aggregate_cross_check",
+      "selected_repeat_K_all_range": [
+        8,
+        10
+      ],
+      "recorded_methods": [
+        "Qwen/reranker RRF60 guardrail",
+        "keep_qwen_top10_rerank11_30"
+      ]
+    },
+    "excluded_from_selection": [
+      {
+        "method": "Gemma 31B",
+        "reason": "Failed the literal-source-quote end gate."
+      }
+    ],
+    "newly_recomputed_results": [
+      "gpt61_low",
+      "gpt61_low_repeat02",
+      "historical Qwen baseline"
+    ],
+    "other_comparison_results": "Stored aggregate cross-checks; no new inference or independent generalization evaluation."
+  },
+  "runtime": {
+    "entrypoint": "python -m support_program_similarity.generative",
+    "transport": "Existing ChatGPT Codex CLI login via the experiment-derived loopback task gateway.",
+    "direct_API_model_availability_guaranteed": false,
+    "automatic_model_fallback": false,
+    "timeout_seconds_per_attempt_default": 2400,
+    "max_quote_repair_attempts": 2,
+    "quote_repairs_may_change_rankings_or_other_fields": false,
+    "full_prepared_text_sent_to_model_service": true,
+    "silent_text_or_token_truncation": false,
+    "oversized_input_behavior": "Requests exceeding service limits fail; the runner does not shorten the corpus.",
+    "reference_label_files_read": false,
+    "model_tools_enabled": false,
+    "previous_conversation_forwarded": false,
+    "public_package_includes_OS_file_access_isolation": false,
+    "output_must_be_new_directory": true,
+    "inference_behavior_changed": true,
+    "historical_local_retrieval_entrypoint": "python -m support_program_similarity.retrieval",
+    "input_order": "Aliases follow the supplied query/candidate row order without adding randomness. Exact historical prompt reproduction requires the frozen historical order and exclusions; that order is not the original unsorted corpus file order."
+  },
+  "historical_baseline": {
+    "status": "historical_baseline_retained; no longer the current selection",
+    "selection": "Qwen3-Embedding-8B instructed weighted-window mean + Qwen3-Reranker-0.6B top20",
+    "queries": 13,
+    "candidate_documents": 140,
+    "known_positive_pairs": 19,
+    "metrics": {
+      "MAP": 0.56743524993525,
+      "MRR": 0.5869930069930069,
+      "K_all": 27,
+      "recall": {
+        "10": 0.6923076923076923,
+        "20": 0.8846153846153846,
+        "27": 1,
+        "30": 1
+      }
+    },
+    "source_sha256": {
+      "corpus.json": "5b6326aa891b6ed9c3467416ae06a5c435ac5f4e78760d0d1eb70d9fb2e10e36",
+      "pairs.json": "766ab66fa32f607a55d08884460463de960ba230bb2ce46323055adde4a1dc42",
+      "run.py": "fa3d86db5afbd63ec63fdd7f68126ff65a09891f4cf339f6c6dfdb5cc863af83",
+      "qwen_only_reranker.py": "28888f3bcf076f66b1d3e20816a921e432037767071f97aa84cc0a3f69e4cb4c",
+      "qwen_only_reranker_scores.json": "59b276e556d2c42a969b9ade4bec36f8fcfd1fa78c356c4a59f4f618d6f12c8c"
+    },
+    "reranker_revision": "e61197ed45024b0ed8a2d74b80b4d909f1255473",
+    "unicode_safe_release_verification": {
+      "MAP": 0.56743524993525,
+      "MRR": 0.5869930069930069,
+      "all_positive_min_k": 27,
+      "changed_rankings": 3,
+      "reembedded_documents": 4,
+      "new_reranked_pairs": 0,
+      "preserved_originals": 153,
+      "recall": {
+        "10": 0.6923076923076923,
+        "20": 0.8846153846153846,
+        "27": 1,
+        "30": 1
+      }
+    },
+    "saved_artifact_sha256": {
+      "unicode_safe_rankings": "fae01ddadc66493ec6a94fa7f67be1c390a414fd1a1fd9c8fdca670c652a0ac2",
+      "unicode_safe_vectors": "975dc4956fd44685d7f8c40410ef05c990ac68a3856a0bb3b7f223425ffdf110"
+    },
+    "current_replay_verification": {
+      "checked_on": "2026-10-20",
+      "source_hashes_matched": 5,
+      "unicode_safe_rankings_reproduced": true,
+      "metrics_reproduced": true,
+      "fresh_GPU_inference": false
+    },
+    "original_seven_method_comparison": {
       "KoE5": {
         "MAP": 0.47705738705738704,
         "MRR": 0.5032051282051282,
@@ -147,23 +503,61 @@
         }
       }
     },
-    "saved_artifact_sha256": {
-      "unicode_safe_rankings": "fae01ddadc66493ec6a94fa7f67be1c390a414fd1a1fd9c8fdca670c652a0ac2",
-      "unicode_safe_vectors": "975dc4956fd44685d7f8c40410ef05c990ac68a3856a0bb3b7f223425ffdf110"
+    "original_comparison_metric_scope": "Original full-ranking MAP/MRR. Rows with K_all above 30 must not be relabelled as MAP@30; the retained Qwen baseline has K_all 27 so its full MAP equals MAP@30.",
+    "original_selection_tradeoff": "Selected pipeline ties for minimum K_all and has highest MAP among the seven integrated configurations; cosine alone has higher MRR and Recall@10.",
+    "historical_transfer_evidence": {
+      "queries": 10,
+      "K_before_reranker": 20,
+      "K_after_reranker": 8,
+      "same_forward_candidate_pool": false,
+      "independent_unseen_businesses": false,
+      "scope": "Separate historical reverse-direction trial using reused documents and labels; not added to the current sample."
     },
-    "tradeoff": "Selected pipeline ties for minimum K_all and has highest MAP among the seven integrated configurations; cosine alone has higher MRR and Recall@10.",
-    "inference_behavior_changed": false,
-    "experiment_inventory": {
-      "completed": false,
-      "verified_scope": "Seven configurations in the integrated 13-query, 140-candidate, 19-known-positive-pair experiment, plus matching historical source hashes.",
-      "largest_sample_across_all_local_experiments_reconfirmed": false,
-      "limitation": "The workstation bridge became unavailable before the additional local experiment inventory returned. This refresh makes no new claim about the largest sample across all local experiments."
+    "inference_behavior_changed_in_this_refresh": false
+  },
+  "limitations": [
+    "All current model comparisons and both selected repeats reuse development material. No independently held-out unseen-business generalization result is available.",
+    "Known positives are incomplete; unjudged candidates are not confirmed negatives. Full recall of 19 known relations is not proof of complete real-world recall.",
+    "Two repeated executions are one 13-query evaluation dataset, not 26 independent queries. Their range and mean are descriptive, not an uncertainty interval from an independent test set.",
+    "The larger query count of the reverse experiment reuses the same 19 relations under a different candidate pool and is not pooled with the forward results.",
+    "The 558-source audit and 184-record label preparation are different work products, not additional completed model-evaluation samples; input-linked-ready label rows were zero.",
+    "Literal-source-quote and output-structure gates do not establish semantic correctness or the completeness of human judgments.",
+    "Prepared-text provenance, program segmentation and source linkage remain external. Some mappings are manual or use parent-program proxy inputs; inputs have not all been regenerated with the latest parser.",
+    "Only the two selected GPT low outputs and the historical Qwen result were recalculated in this refresh; additional model comparisons were checked against stored aggregates.",
+    "Inventory covers linked project experiment families, not all workstation files or unrelated experiments. No claim of a universal highest score or a larger independent evaluation is made.",
+    "The Codex CLI, service, model behavior and account availability can change. Stored artifact replay does not guarantee identical output or model availability for a new run.",
+    "Actual corpus text, names, individual IDs, labels, source documents, vectors, model weights, private paths and raw run artifacts are not part of this public selection record.",
+    "Preserve the frozen historical query/candidate ordering and exclusions to reproduce the prompt. Reordering corpus rows changes aliases and the prompt; the original corpus file order does not by itself reproduce the historical shuffled order."
+  ],
+  "source_checks": {
+    "status": "verified_before_publication",
+    "unit_tests_passed": 40,
+    "test_command": "python -m unittest discover -s tests -v",
+    "windows_python_version": "3.12.10",
+    "windows_checkout_verified": true,
+    "synthetic_windows_process_and_loopback_integration": {
+      "passed": true,
+      "assertions_passed": 34,
+      "queries": 1,
+      "candidate_documents": 3,
+      "top_k": 2,
+      "gateway_requests_to_in_memory_upstream": 2,
+      "external_requests": 0,
+      "real_child_process_and_localhost_HTTP": true,
+      "model_service_and_HTTPS_upstream_mocked": true
     },
-    "source_checks": {
-      "unit_tests_passed": 19,
-      "test_environment": "Isolated source checkout",
-      "publication_gate": "Indexed blobs, source format/content restrictions, and optional scan of every outgoing commit tree",
-      "private_assets_in_reviewed_candidate": false
+    "publication_gate": {
+      "passed": true,
+      "indexed_files_checked": 21
+    },
+    "manual_source_and_aggregate_record_review_completed": true,
+    "private_assets_in_reviewed_candidate": false,
+    "outgoing_commit_tree_check_required_before_push": true,
+    "reviewed_source_sha256": {
+      "support_program_similarity/generative.py": "9e161b244345bea246f7a3ada8211c6f8a75c3dde61db9d168a0644db0966c58",
+      "support_program_similarity/codex_worker.py": "2a440d38cc19b78b444dacd4ab18b4dd6d90aea278b0bf3e30891a28d4d57ecd",
+      "tests/test_generative.py": "2a3d59a8b271676911ecfe469da45562c2f96b440580d5f8144398a4bccdd54e",
+      "tests/test_codex_worker.py": "d6ee6daa6bfc9c4880f6cfc5606947c165a459a5c5699cce574d9137bcef3444"
     }
   }
 }
