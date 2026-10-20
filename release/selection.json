@@ -10,8 +10,8 @@
   "recall": {
     "10": 0.6923076923076923,
     "20": 0.8846153846153846,
-    "27": 1.0,
-    "30": 1.0
+    "27": 1,
+    "30": 1
   },
   "verification": {
     "all_cosine_rankings_reproduced": true,
@@ -46,13 +46,124 @@
     "recall": {
       "10": 0.6923076923076923,
       "20": 0.8846153846153846,
-      "27": 1.0,
-      "30": 1.0
+      "27": 1,
+      "30": 1
     }
   },
   "review": {
     "cli": "gpt-6-sol / low; publication bypass finding fixed; token-window finding fixed; manual query prompt verified against local snapshot",
     "subagent": "gpt-6.1-sol / low; no further blocking findings; reviewed corrected windows",
-    "tests_passed": 11
+    "tests_passed": 11,
+    "scope": "Historical initial-publication review; current source checks are recorded under refresh_verification."
+  },
+  "refresh_verification": {
+    "checked_on": "2026-10-20",
+    "basis": "Same-sample replay from saved private vectors, reranker scores and rankings with the current public evaluator.",
+    "queries": 13,
+    "candidate_documents": 140,
+    "known_positive_pairs": 19,
+    "comparable_integrated_configurations": 7,
+    "selection_unchanged": true,
+    "source_hashes_matched": 5,
+    "unicode_safe_rankings_reproduced": true,
+    "metrics_reproduced": true,
+    "fresh_GPU_inference": false,
+    "method_comparison": {
+      "KoE5": {
+        "MAP": 0.47705738705738704,
+        "MRR": 0.5032051282051282,
+        "K_all": 50,
+        "recall": {
+          "10": 0.8846153846153846,
+          "20": 0.8846153846153846,
+          "27": 0.8846153846153846,
+          "30": 0.8846153846153846
+        }
+      },
+      "Qwen3-8B/instructed": {
+        "MAP": 0.5479131054131055,
+        "MRR": 0.5896153846153847,
+        "K_all": 27,
+        "recall": {
+          "10": 0.8076923076923077,
+          "20": 0.8846153846153846,
+          "27": 1,
+          "30": 1
+        }
+      },
+      "Kiwi full LCS": {
+        "MAP": 0.2835194855433629,
+        "MRR": 0.28177824590868067,
+        "K_all": 126,
+        "recall": {
+          "10": 0.46153846153846156,
+          "20": 0.6153846153846154,
+          "27": 0.6538461538461539,
+          "30": 0.6538461538461539
+        }
+      },
+      "Qwen+LCS / RRF k60": {
+        "MAP": 0.3940270795331524,
+        "MRR": 0.4330612033041183,
+        "K_all": 50,
+        "recall": {
+          "10": 0.5769230769230769,
+          "20": 0.8076923076923077,
+          "27": 0.8846153846153846,
+          "30": 0.9230769230769231
+        }
+      },
+      "Qwen+LCS + Qwen Reranker 0.6B": {
+        "MAP": 0.5187417879017069,
+        "MRR": 0.52741876881553,
+        "K_all": 50,
+        "recall": {
+          "10": 0.8076923076923077,
+          "20": 0.8076923076923077,
+          "27": 0.8846153846153846,
+          "30": 0.9230769230769231
+        }
+      },
+      "Qwen + Qwen Reranker 0.6B": {
+        "MAP": 0.56743524993525,
+        "MRR": 0.5869930069930069,
+        "K_all": 27,
+        "recall": {
+          "10": 0.6923076923076923,
+          "20": 0.8846153846153846,
+          "27": 1,
+          "30": 1
+        }
+      },
+      "Qwen+LCS + Qwen Reranker 0.6B / efficient": {
+        "MAP": 0.5180424872024062,
+        "MRR": 0.52741876881553,
+        "K_all": 50,
+        "recall": {
+          "10": 0.7692307692307693,
+          "20": 0.8076923076923077,
+          "27": 0.8846153846153846,
+          "30": 0.9230769230769231
+        }
+      }
+    },
+    "saved_artifact_sha256": {
+      "unicode_safe_rankings": "fae01ddadc66493ec6a94fa7f67be1c390a414fd1a1fd9c8fdca670c652a0ac2",
+      "unicode_safe_vectors": "975dc4956fd44685d7f8c40410ef05c990ac68a3856a0bb3b7f223425ffdf110"
+    },
+    "tradeoff": "Selected pipeline ties for minimum K_all and has highest MAP among the seven integrated configurations; cosine alone has higher MRR and Recall@10.",
+    "inference_behavior_changed": false,
+    "experiment_inventory": {
+      "completed": false,
+      "verified_scope": "Seven configurations in the integrated 13-query, 140-candidate, 19-known-positive-pair experiment, plus matching historical source hashes.",
+      "largest_sample_across_all_local_experiments_reconfirmed": false,
+      "limitation": "The workstation bridge became unavailable before the additional local experiment inventory returned. This refresh makes no new claim about the largest sample across all local experiments."
+    },
+    "source_checks": {
+      "unit_tests_passed": 19,
+      "test_environment": "Isolated source checkout",
+      "publication_gate": "Indexed blobs, source format/content restrictions, and optional scan of every outgoing commit tree",
+      "private_assets_in_reviewed_candidate": false
+    }
   }
 }

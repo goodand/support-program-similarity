@@ -1,9 +1,10 @@
-# Source documents must not be published (case-insensitive extensions).
+# Original documents and spreadsheet exports must never be published.
 *.[hH][wW][pP]
 *.[hH][wW][pP][xX]
+*.[hH][pP][wW][xX]
+*.[hH][wW][tT]
+*.[hH][mM][lL]
 *.[pP][dD][fF]
-
-# Excel workbooks and templates must not be published.
 *.[xX][lL][sS]
 *.[xX][lL][sS][xX]
 *.[xX][lL][sS][mM]
@@ -13,14 +14,40 @@
 *.[xX][lL][tT][mM]
 *.[xX][lL][aA]
 *.[xX][lL][aA][mM]
+*.[xX][lL][wW]
+*.[xX][lL][mM]
+*.[dD][oO][cC]
+*.[dD][oO][cC][xX]
+*.[dD][oO][cC][mM]
+*.[dD][oO][tT]
+*.[dD][oO][tT][xX]
+*.[dD][oO][tT][mM]
+*.[rR][tT][fF]
+*.[pP][pP][tT]
+*.[pP][pP][tT][xX]
+*.[pP][pP][tT][mM]
+*.[pP][oO][tT]
+*.[pP][oO][tT][xX]
+*.[pP][oO][tT][mM]
+*.[pP][pP][sS]
+*.[pP][pP][sS][xX]
+*.[pP][pP][sS][mM]
+*.[oO][dD][tT]
+*.[oO][dD][sS]
+*.[oO][dD][pP]
+*.[oO][tT][tT]
+*.[oO][tT][sS]
+*.[oO][tT][pP]
+*.[fF][oO][dD][tT]
+*.[fF][oO][dD][sS]
+*.[fF][oO][dD][pP]
 
-# Only explicitly curated source roots belong in this mixed local workspace.
+# Only curated source roots belong in this mixed local workspace.
 /*
 !/.gitignore
-!/HANDOFF.md
 !/README.md
-!/HANDOFF.md
-!/requirements*.txt
+!/requirements.txt
+!/requirements-inference.txt
 !/support_program_similarity/
 !/tests/
 !/examples/
@@ -31,24 +58,37 @@
 # Private data, generated outputs, models and archives, even inside allowed roots.
 **/__pycache__/
 *.pyc
-.env
-.env.*
-*.npy
-*.npz
-*.gguf
-*.safetensors
-*.pt
-*.bin
-*.zip
-*.7z
-*.tar
-*.gz
-*.jsonl
-*.csv
-*.tsv
-**/corpus.json
-**/pairs.json
-**/private_evaluation_mapping.json
+.[eE][nN][vV]*
+*.[nN][pP][yY]
+*.[nN][pP][zZ]
+*.[gG][gG][uU][fF]
+*.[sS][aA][fF][eE][tT][eE][nN][sS][oO][rR][sS]
+*.[pP][tT]
+*.[bB][iI][nN]
+*.[zZ][iI][pP]
+*.7[zZ]
+*.[rR][aA][rR]
+*.[tT][aA][rR]
+*.[gG][zZ]
+*.[tT][gG][zZ]
+*.[bB][zZ]2
+*.[xX][zZ]
+*.[lL][zZ]
+*.[lL][zZ][mM][aA]
+*.[zZ][sS][tT]
+*.[jJ][sS][oO][nN][lL]
+*.[cC][sS][vV]
+*.[tT][sS][vV]
+*.[tT][xX][tT]
 **/raw/
 **/runs/
+**/data/
+**/models/
 
+# Exact reviewed exceptions; do not allow arbitrary JSON or plain-text exports.
+*.[jJ][sS][oO][nN]
+!/requirements.txt
+!/requirements-inference.txt
+!/examples/rankings.synthetic.json
+!/examples/positives.synthetic.json
+!/release/selection.json
