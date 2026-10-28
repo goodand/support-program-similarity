@@ -10,9 +10,11 @@ SOURCE_SUFFIXES = {
     'tools': {'.py'},
     'examples': {'.md'},
     'release': {'.md'},
+    'experiments': {'.py', '.md', '.sh'},
 }
 ROOT_FILES = {'.gitignore', 'README.md', 'requirements.txt', 'requirements-inference.txt'}
-PUBLIC_JSON = {'examples/rankings.synthetic.json', 'examples/positives.synthetic.json', 'release/selection.json'}
+PUBLIC_JSON = {'examples/rankings.synthetic.json', 'examples/positives.synthetic.json', 'release/selection.json',
+               'experiments/kim_db_chunks/config.json', 'experiments/kim_db_chunks/chunk_config.json'}
 PRIVATE_DIRS = {'raw', 'runs', 'data', 'models', '__pycache__', '.git'}
 FORBIDDEN = {
     '.hwp', '.hwpx', '.hpwx', '.hwt', '.hml', '.pdf',

@@ -54,6 +54,7 @@
 !/tools/
 !/release/
 !/.github/
+!/experiments/
 
 # Private data, generated outputs, models and archives, even inside allowed roots.
 **/__pycache__/
@@ -92,3 +93,5 @@
 !/examples/rankings.synthetic.json
 !/examples/positives.synthetic.json
 !/release/selection.json
+!/experiments/kim_db_chunks/config.json
+!/experiments/kim_db_chunks/chunk_config.json
