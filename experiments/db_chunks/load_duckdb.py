@@ -2,7 +2,7 @@
 
 Normalization (l1, l2) is NOT re-implemented: the function defs are taken from merge_program_names.py via AST and
 registered as DuckDB UDFs, so the DB keys equal the run's keys. Asserts the DB counts match counts.json.
-Usage: .venv/Scripts/python.exe -I -X utf8 load_duckdb.py <run_name>   -> runs/<run_name>/kim_programs.duckdb
+Usage: .venv/Scripts/python.exe -I -X utf8 load_duckdb.py <run_name>   -> runs/<run_name>/programs.duckdb
 """
 import ast
 import json
@@ -15,7 +15,7 @@ import duckdb
 sys.stdout.reconfigure(encoding='utf-8')
 HERE = Path(__file__).resolve().parent
 RUN = HERE / 'runs' / sys.argv[1]
-DB = RUN / 'kim_programs.duckdb'
+DB = RUN / 'programs.duckdb'
 if DB.exists():
     raise SystemExit(f'{DB} exists')
 SRC = HERE / 'merge_program_names.py'

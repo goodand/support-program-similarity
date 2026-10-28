@@ -1,6 +1,6 @@
 """Deterministic full-text scan for eval_name_match_001 (fixes from the adversarial harness review, 2026-10-28).
 
-For each of the 54 eval programs, find every place in Kim's central data where the program name occurs, in ANY text:
+For each of the 54 eval programs, find every place in provider A's central data where the program name occurs, in ANY text:
 tabular cells (xlsx data_only, csv, sqlite tables+views, text and blob), hwpx section XML, PDF text, json strings,
 txt, and the same inside zip archives. Normalization = l1/l2 imported from merge_program_names.py (same as the merge).
 Keys per program: l2 (brackets removed), l1 of the full name (brackets kept as text), l1 of each bracket's inner text
@@ -31,15 +31,15 @@ SCAN = {
     'root': '<DEV_EVAL_ROOT>',
     'exclude_top_dirs': CFG['exclude_top_dirs'],
     '_doc_local': 'local-government data is out of scope (eval programs are central). Listed explicitly; excluded files are written to coverage.json.',
-    'exclude_dirs': ['<DEV_EVAL_ROOT>/지자체사업정보DB'],
-    'exclude_files': ['<DEV_EVAL_ROOT>/중소기업지원사업_검색시스템/local_businfo.db',
-                      '<DEV_EVAL_ROOT>/중소기업지원사업_검색시스템/_prev_local_businfo_260722.db'],
+    'exclude_dirs': ['<DEV_EVAL_ROOT>/<지자체_DB_폴더>'],
+    'exclude_files': ['<DEV_EVAL_ROOT>/<중기_DB_폴더>/<사업정보_DB>.db',
+                      '<DEV_EVAL_ROOT>/<중기_DB_폴더>/<사업정보_DB_이전본>.db'],
     'exts': ['.xlsx', '.xlsm', '.csv', '.sqlite', '.db'],
-    '_doc_exts': '사용자 결정(2026-10-28): 김미정 박사님 DB·CSV·엑셀만 본다. hwpx·hwp·pdf·json·zip은 검색하지 않는다(not_scanned_by_ext에 개수 기록).',
+    '_doc_exts': '사용자 결정(2026-10-28): 자료 제공자 A DB·CSV·엑셀만 본다. hwpx·hwp·pdf·json·zip은 검색하지 않는다(not_scanned_by_ext에 개수 기록).',
     'zip_inner_exts': ['.hwpx', '.hwp', '.pdf', '.xml', '.txt', '.csv', '.json'],
     'min_key_len': 6,
 }
-EVAL = Path('<DEV_EVAL_ROOT>/jh_dev/kim_program_inventory_v1/runs/002/eval_match.json')
+EVAL = Path('<DEV_EVAL_ROOT>/jh_dev/<EXPERIMENT_DIR>/runs/002/eval_match.json')
 EVAL_SHA = '58f0259015edaeed4b5fc1cf4fd9e7fe063ced5a9d3da218579fe94f1a842d56'
 
 ns = {'re': re, 'CFG': CFG, 'NORM': CFG['normalize'], 'YCFG': CFG['year'],

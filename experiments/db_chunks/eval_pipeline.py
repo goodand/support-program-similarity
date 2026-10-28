@@ -1,7 +1,7 @@
 """Retrieval pipeline grid on the 2026 central pool (RAG retrieval stage), reusing the earlier best components.
 
 Chunk conditions (texts.json): N_name, A_all, B_split (목적·내용 / 수혜대상), C_split_legal (+근거법령),
-  D_nam_all / D_nam_content / D_nam_content_nomerge (eval-group programs carry 남윤형 엑셀 text; others keep Kim A_all).
+  D_evalb_all / D_evalb_content / D_evalb_content_nomerge (eval-group programs carry 평가자 B 엑셀 text; others keep provider-A A_all).
 Stage 1 (full order):
   qwen        Qwen3-Embedding-8B cosine (same model/loading as before; embeddings cached by text sha256)
   vn          BM25 with two-stage verbosity/scope normalization (Na 2015) = exp_M05_VN.vn_field, bv=1, bs=0.75, k1=1.5,
@@ -47,7 +47,7 @@ keys = T['keys']; kix = {k: i for i, k in enumerate(keys)}; N = len(keys)
 sha = lambda x: hashlib.sha256(x.encode('utf-8')).hexdigest()  # noqa: E731
 TYPES = ['purpose_content', 'beneficiary', 'legal']
 CONDS = {'N_name': ['name'], 'A_all': ['all'], 'B_split': TYPES[:2], 'C_split_legal': TYPES,
-         'D_nam_all': ['nam_all'], 'D_nam_content': ['nam_content'], 'D_nam_content_nomerge': ['nam_content_nomerge']}
+         'D_evalb_all': ['evalb_all'], 'D_evalb_content': ['evalb_content'], 'D_evalb_content_nomerge': ['evalb_content_nomerge']}
 queries = [(g, k, [o for o in ks if o != k]) for g, ks in T['eval_groups'].items() for k in ks]
 qix = [kix[k] for _, k, _ in queries]
 

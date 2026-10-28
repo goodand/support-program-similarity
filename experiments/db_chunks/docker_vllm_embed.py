@@ -25,7 +25,7 @@ MODE = sys.argv[2]
 OUT = RUN / 'docker'; OUT.mkdir(exist_ok=True)
 IMAGE = 'govparse-semantic-budget-vllm:0.11.0-cu128-20261007'
 MODEL = '<DEV_EVAL_ROOT>/jh_dev/govparse-mvp-windows/govparse-mvp/data/semantic_budget_recall_20261007_v1/models/Qwen__Qwen3-Embedding-8B'
-NAME, PORT = 'kim_vllm_embed', 8011
+NAME, PORT = 'vllm_embed', 8011
 sha = lambda x: hashlib.sha256(x.encode('utf-8')).hexdigest()  # noqa: E731
 
 

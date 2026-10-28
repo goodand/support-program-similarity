@@ -1,4 +1,4 @@
-"""Build per-program chunks for the chunking experiment from Kim's tabular data (chunk_config.json).
+"""Build per-program chunks for the chunking experiment from provider A's tabular data (chunk_config.json).
 
 Program unit = l2 key of a name-column value (same normalization as merge_program_names.py), 2026, central only.
 For every row (2026) of every central sheet/table that has a name column, the row's texts are attached to each name in it:

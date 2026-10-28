@@ -6,7 +6,7 @@
 #  3. Docker vLLM parity check (GPU) -> 4. stage2 (6,000-char embeddings) only if parity passed
 # Nothing is pushed, deleted or installed. Docker container is removed after each use.
 set -u
-P="<DEV_EVAL_ROOT>/jh_dev/kim_program_inventory_v1"; R="$P/runs/003"; A="$R/autopilot"; mkdir -p "$A"
+P="<DEV_EVAL_ROOT>/jh_dev/<EXPERIMENT_DIR>"; R="$P/runs/003"; A="$R/autopilot"; mkdir -p "$A"
 EPY="<DEV_EVAL_ROOT>/_embedding_v3_env/Scripts/python.exe"; LPY="<DEV_EVAL_ROOT>/jh_dev/program_mapping_nlp_v1/.venv/Scripts/python.exe"
 log() { echo "$(date '+%m-%d %H:%M') $*" >> "$A/autopilot.log"; }
 log "waiting for eval_pipeline.py"

@@ -2,7 +2,7 @@
 import argparse
 import re
 import subprocess
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 
 SOURCE_SUFFIXES = {
     'support_program_similarity': {'.py'},
@@ -14,7 +14,7 @@ SOURCE_SUFFIXES = {
 }
 ROOT_FILES = {'.gitignore', 'README.md', 'requirements.txt', 'requirements-inference.txt'}
 PUBLIC_JSON = {'examples/rankings.synthetic.json', 'examples/positives.synthetic.json', 'release/selection.json',
-               'experiments/kim_db_chunks/config.json', 'experiments/kim_db_chunks/chunk_config.json'}
+               'experiments/db_chunks/config.json', 'experiments/db_chunks/chunk_config.json'}
 PRIVATE_DIRS = {'raw', 'runs', 'data', 'models', '__pycache__', '.git'}
 FORBIDDEN = {
     '.hwp', '.hwpx', '.hpwx', '.hwt', '.hml', '.pdf',
@@ -30,6 +30,11 @@ ARCHIVE_SIGNATURES = (
     b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1',  # OLE: HWP and older Office documents.
     b'\x1f\x8b', b'7z\xbc\xaf\x27\x1c', b'Rar!\x1a\x07', b'BZh', b'\xfd7zXZ\x00',
 )
+
+
+# Real names and internal file names live in an untracked local file so the list itself is never published.
+_DENY = Path(__file__).resolve().parents[1] / '.publish_denylist'
+DENYLIST = [t.strip() for t in _DENY.read_text(encoding='utf-8').splitlines() if t.strip()] if _DENY.is_file() else []
 
 
 def allowed_source(path):
@@ -71,6 +76,10 @@ def inspect(path, blob, mode='100644'):
         errors.append('possible secret')
     if re.search(r'(?i)[A-Z]:[\\/](?:Users|dev_eval_team)[\\/]', text):
         errors.append('private workstation path')
+    if '\ubc15\uc0ac' in text:  # honorific title "doctor", usually next to a real name
+        errors.append('personal honorific (possible real name)')
+    if any(term in text for term in DENYLIST):
+        errors.append('locally denylisted name or internal file name')
     if p.suffix.lower() == '.json' and path not in PUBLIC_JSON:
         errors.append('JSON is not an explicitly reviewed synthetic/provenance file')
     return errors

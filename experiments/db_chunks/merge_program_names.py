@@ -1,4 +1,4 @@
-"""김미정 박사님 자료 전체에서 사업명을 모아 병합·중복 제거·개수 집계 (독립 실험 1단계).
+"""자료 제공자 A 자료 전체에서 사업명을 모아 병합·중복 제거·개수 집계 (독립 실험 1단계).
 
 Reads config.json. Read-only on every source (sqlite opened with mode=ro). Per-file results are cached in cache/
 keyed by (path, size, mtime), so an interrupted run resumes. Output: runs/<name>/ (refuses a non-empty folder).

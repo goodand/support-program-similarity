@@ -1,5 +1,5 @@
 {
- "_doc": "독립 실험 1단계 (사용자 결정 2026-10-28): 김미정 박사님 자료 전체(xlsx·csv·sqlite·db)에서 사업명을 모아 병합·중복 제거·개수 집계. 모집단 = '전부 병합'(사용자 선택). 규칙은 모두 여기 둔다.",
+ "_doc": "독립 실험 1단계 (사용자 결정 2026-10-28): 자료 제공자 A 자료 전체(xlsx·csv·sqlite·db)에서 사업명을 모아 병합·중복 제거·개수 집계. 모집단 = '전부 병합'(사용자 선택). 규칙은 모두 여기 둔다.",
  "root": "<DEV_EVAL_ROOT>",
  "exclude_top_dirs": ["jh_dev", "_codex_outputs", "_embedding_v3_env", ".git"],
  "extensions": [".xlsx", ".xlsm", ".csv", ".sqlite", ".db"],

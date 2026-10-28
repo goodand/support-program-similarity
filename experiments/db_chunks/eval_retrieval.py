@@ -1,4 +1,4 @@
-"""Retrieval evaluation of chunking conditions (RAG retrieval stage), 2026 central pool from Kim's tabular data.
+"""Retrieval evaluation of chunking conditions (RAG retrieval stage), 2026 central pool from provider A's tabular data.
 
 Conditions: N_name (사업명만), A_all (나오는 텍스트 전부, 1 chunk), B_split (목적·내용 / 수혜대상), C_split_legal (+ 근거법령).
 Methods: bm25 (character bigrams, k1=1.2, b=0.75) and qwen (Qwen3-Embedding-8B cosine, no instruction, symmetric).
@@ -49,37 +49,37 @@ assert not missing, f'eval programs missing from pool: {missing}'
 qix = [kix[k] for _, k, _ in queries]
 
 
-# ---------- 남윤형 자료 청크 (사용자 요청 2026-10-28): 평가 그룹 사업만 남윤형 엑셀 행 텍스트로 바꾼다 ----------
-NAM = Path('<DEV_EVAL_ROOT>/jh_dev/govparse-claude-lab/outputs/goldenset_similar_groups_xlsx/유사사업그룹_표추출.xlsx')
-NAM_SHA = 'f185d861455f2e9fee9fe35dd517452cdaf342d653ec7d7ffa7432172f32aee2'
-NAM_BUDGET_COLS = {'26예산(억원)', '예산서_2026금액(백만원)', '원문대조_금액'}
-NAM_CONTENT_COLS = ['사업명', '소관부처', '사업목적', '지원대상(업종)', '지원내용', '지원조건', '지원방식', '특이사항']
-assert hashlib.sha256(NAM.read_bytes()).hexdigest() == NAM_SHA, 'Nam workbook changed'
+# ---------- 평가자 B 자료 청크 (사용자 요청 2026-10-28): 평가 그룹 사업만 평가자 B 엑셀 행 텍스트로 바꾼다 ----------
+EVAL_B = Path('<DEV_EVAL_ROOT>/jh_dev/govparse-claude-lab/outputs/goldenset_similar_groups_xlsx/<평가그룹_엑셀>.xlsx')
+EVAL_B_SHA = 'f185d861455f2e9fee9fe35dd517452cdaf342d653ec7d7ffa7432172f32aee2'
+EVAL_B_BUDGET_COLS = {'26예산(억원)', '예산서_2026금액(백만원)', '원문대조_금액'}
+EVAL_B_CONTENT_COLS = ['사업명', '소관부처', '사업목적', '지원대상(업종)', '지원내용', '지원조건', '지원방식', '특이사항']
+assert hashlib.sha256(EVAL_B.read_bytes()).hexdigest() == EVAL_B_SHA, 'evaluator-B workbook changed'
 import openpyxl  # noqa: E402
-_ws = openpyxl.load_workbook(NAM, read_only=True)['사업목록']
+_ws = openpyxl.load_workbook(EVAL_B, read_only=True)['사업목록']
 _it = _ws.iter_rows(values_only=True)
 _h = list(next(_it))
-nam_rows = {}
+evalb_rows = {}
 eval_names = {m['keys'][0]: m['사업명'] for m in ev['matched_programs'] if m['그룹ID'] in ev['groups_evaluable']}
 for r in _it:
     d = dict(zip(_h, r))
     for k, nm in eval_names.items():
         if d['사업명'] == nm:
-            nam_rows[k] = d
-assert set(nam_rows) == set(eval_names), 'Nam rows not found for every eval program'
+            evalb_rows[k] = d
+assert set(evalb_rows) == set(eval_names), 'evaluator B rows not found for every eval program'
 OVERRIDE = {
-    # D_nam_all: every column except budget columns (user's literal rule; includes group ids/names → leakage expected)
-    'nam_all': {k: ' / '.join(f'{c}: {v}' for c, v in d.items() if c not in NAM_BUDGET_COLS and v not in (None, ''))
-                for k, d in nam_rows.items()},
-    # D_nam_content: program-description columns only (control: no group id/name, no efficiency proposal, no mapping columns)
-    'nam_content': {k: ' / '.join(f'{c}: {d[c]}' for c in NAM_CONTENT_COLS if d.get(c) not in (None, ''))
-                    for k, d in nam_rows.items()},
+    # D_evalb_all: every column except budget columns (user's literal rule; includes group ids/names → leakage expected)
+    'evalb_all': {k: ' / '.join(f'{c}: {v}' for c, v in d.items() if c not in EVAL_B_BUDGET_COLS and v not in (None, ''))
+                for k, d in evalb_rows.items()},
+    # D_evalb_content: program-description columns only (control: no group id/name, no efficiency proposal, no mapping columns)
+    'evalb_content': {k: ' / '.join(f'{c}: {d[c]}' for c in EVAL_B_CONTENT_COLS if d.get(c) not in (None, ''))
+                    for k, d in evalb_rows.items()},
 }
-CONDS.update({'D_nam_all': ['nam_all'], 'D_nam_content': ['nam_content']})
+CONDS.update({'D_evalb_all': ['evalb_all'], 'D_evalb_content': ['evalb_content']})
 
 
 def texts_of(t):
-    if t in OVERRIDE:  # eval programs get Nam text; every other program keeps its Kim A_all chunk
+    if t in OVERRIDE:  # eval programs get evaluator B text; every other program keeps its provider-A A_all chunk
         return [OVERRIDE[t].get(p['key'], p['all']) for p in progs]
     return [p['name_chunk'] if t == 'name' else p[t] for p in progs]
 
