@@ -23,18 +23,20 @@ FORBIDDEN = {
     '.ppt', '.pptx', '.pptm', '.pot', '.potx', '.potm', '.pps', '.ppsx', '.ppsm',
     '.odt', '.ods', '.odp', '.ott', '.ots', '.otp', '.fodt', '.fods', '.fodp',
     '.npy', '.npz', '.gguf', '.safetensors', '.bin', '.pt', '.csv', '.tsv', '.jsonl',
+    '.sql', '.sqlite', '.sqlite3', '.db', '.db3', '.duckdb', '.mdb', '.accdb', '.dump', '.parquet',
     '.zip', '.7z', '.rar', '.tar', '.gz', '.tgz', '.bz2', '.xz', '.lz', '.lzma', '.zst',
 }
 ARCHIVE_SIGNATURES = (
     b'PK\x03\x04', b'PK\x05\x06', b'PK\x07\x08',
     b'\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1',  # OLE: HWP and older Office documents.
+    b'SQLite format 3\x00',  # raw SQLite database, including renamed payload
     b'\x1f\x8b', b'7z\xbc\xaf\x27\x1c', b'Rar!\x1a\x07', b'BZh', b'\xfd7zXZ\x00',
 )
 
 
 # Real names and internal file names live in an untracked local file so the list itself is never published.
 _DENY = Path(__file__).resolve().parents[1] / '.publish_denylist'
-DENYLIST = [t.strip() for t in _DENY.read_text(encoding='utf-8').splitlines() if t.strip()] if _DENY.is_file() else []
+DENYLIST = [t.strip().casefold() for t in _DENY.read_text(encoding='utf-8').splitlines() if t.strip()] if _DENY.is_file() else []
 
 
 def allowed_source(path):
@@ -78,7 +80,7 @@ def inspect(path, blob, mode='100644'):
         errors.append('private workstation path')
     if '\ubc15\uc0ac' in text:  # honorific title "doctor", usually next to a real name
         errors.append('personal honorific (possible real name)')
-    if any(term in text for term in DENYLIST):
+    if any(term in text.casefold() for term in DENYLIST):
         errors.append('locally denylisted name or internal file name')
     if p.suffix.lower() == '.json' and path not in PUBLIC_JSON:
         errors.append('JSON is not an explicitly reviewed synthetic/provenance file')
