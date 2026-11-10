@@ -4,8 +4,8 @@
 | 알고 싶은 것 | 열 파일 | 그 안에서 |
 |---|---|---|
 | 어떤 run이 몇 점인가(모든 run, 같은 기준) | `runs/037/runs_compare.xlsx` (csv 동일) | run_id 행. 열: 평가셋 logmean·Δ(학습 전 base)·100위안·MAP·100% 찾는 지점(최악순위 열), 선별셋 같은 열, 조건(seed·lr·epochs·batch·r·짝·학습 s), 서술(가설·사전 규칙·기록된 판정·문제) |
-| A가 B보다 나은가(통계 판정) | `runs/036/VERDICT.md`(11-06 밤), `runs/038/VERDICT_night4.md`(11-07~08) | 비교 행: test Δ [95%], dev Δ [95%], 판정(개선/악화/…만 확정/엇갈림/판단불가: 원인 — 구간 0 포함·자료 부족·자료 없음·seed 엇갈림) |
-| 증명된 결론만 | `HANDOFF_CONTEXT_2026-11-08/02_PROVEN_RESULTS.md` | P1~P12, §B 증명 안 됨 |
+| A가 B보다 나은가(통계 판정) | `runs/036/VERDICT.md`(11-06 밤), `runs/038/VERDICT_night4.md`(11-07~08), `runs/038/VERDICT_night5.md`(11-09) | 비교 행: test Δ [95%], dev Δ [95%], 판정(개선/악화/…만 확정/엇갈림/판단불가: 원인 — 구간 0 포함·자료 부족·자료 없음·seed 엇갈림) |
+| 증명된 결론만 | `HANDOFF_CONTEXT_2026-11-08/02_PROVEN_RESULTS.md` | P1~P13, §B 판정 대기 |
 | 전체 결론·한계·다음 할 일 | `CONCLUSIONS_2026-11-08.md` | §1 결론, §2 한계, §3 미해결, §5 검증 기록 |
 | 보고용 문장·노동시간 계산 | `REPORT_LABOR_SAVINGS_2026-11-08.md` | 핵심 문장, 후보 수 표, 계산식(t 변수) |
 | 왜 그렇게 결정했나(3세션 합의) | `DECISIONS.md` | D-1~D-9 행(제안자·찬반·상태·근거) |
@@ -14,7 +14,7 @@
 | 용어 뜻 | `GLOSSARY.md` | 규칙 선별셋=dev, 사람판정 평가셋=test, 단기 학습 시험=15스텝 등 |
 | 풀(L5) 정의·개수 | `L5_DEFINITION_2026-11-06.md`, `runs/035/chunks_meta.json` | 정의 문장, 37,461, 입력 sha |
 | 풀 변경 영향 | `runs/036/POOL_DIFF.md` | run별 011→035 |
-| 군집화(①) 결과 | `runs/011/leiden/pareto_chunk_vn+qwen_k{3,5,10}.json`, `runs/020/leiden/pareto_<run>_vn+qwen_k5.json` | `post_hoc_gold_chosen`(51쌍 together·cost), `pareto`(해상도별) |
+| 군집화(①) 결과 | `runs/044/CLUSTER_GROUPS.md`·`cluster_groups.json`(11-10 그룹 단위 채점, 31 run); 원자료 `runs/011/leiden/pareto_chunk_vn+qwen_k{3,5,10}.json`, `runs/020/leiden/pareto_<run>_vn+qwen_k5.json` | run 행: 가장 큰 군집, 그룹 완전 포함 /21, 포함률, 학습 전 대비 차이 [95%]; 원자료의 `post_hoc_gold_chosen`은 쌍 단위 참고값 |
 | 사고·교훈 | `runs/030/INCIDENT_2026-11-05_decide1.md`, `runs/040/INCIDENT_2026-11-07_night4.md` | 원인·조치·재발 방지 |
 | 비교표 바깥에 있는 run(어댑터 평균 soup, 학습 전 재인코딩 034 — manifest가 빠진 run) | `runs/036/POOL_DIFF.md`(soup 점수), `DECISIONS.md` D-7(soup 사전 규칙·불통과), `output/qwen_crop_soup3lr_1ep_s42_20261106_day4/adapter/MERGE_MANIFEST.json`(병합 입력 sha) | — |
 | 원천 DB 두 판(budget_sme 08-10 vs 08-11)·공고 마스터 파일 결정 | `L5_DEFINITION_2026-11-06.md`(확정 정의·출처), `runs/035/chunks_meta.json`(실제 읽은 파일 sha: budget_sme a4410d77…=08-11판, 마스터 (1).xlsx 690a4ac6…, master_fills 0f28133d…), `HUMAN_MESSAGES_2026-11-05.md`·`runs/layers_2026/LAYERS_FINAL.md`(11-03~05 경위) | 사용자 11-06 결정: 정의 (1)안, 공고 = 마스터 (1).xlsx + fills |
