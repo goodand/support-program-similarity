@@ -154,3 +154,18 @@
 | claude-sonnet-5-5_high_name | 통과 | 19 | 0 | 0 | 35/35 | True | $3.45 | $1.78 |
 | claude-sonnet-5-5_low_chunk | 통과 | 15 | 0 | 3 | 0/35 | True | $22.71 | $11.37 |
 | claude-sonnet-5-5_low_name | 통과 | 18 | 0 | 1 | 0/35 | True | $2.71 | $1.37 |
+
+## 2026-11-12T18:14:19+09:00 검증
+
+| 조건 | 상태 | 가장 나쁜 순위 | 30위 밖 | 자기 번호 포함 | 모델 기록 | 재계산=요약 | CLI 비용 | 정가(캐시 없음) |
+|---|---|---|---|---|---|---|---|---|
+| claude-haiku-5-5_low_chunk | 통과 | 30위 밖 있음 | 5 | 27 | 0/35 | True | $45.41 | $0.57 |
+| claude-haiku-5-5_low_name | 통과 | 18 | 0 | 0 | 0/35 | True | $6.18 | $0.09 |
+| claude-opus-5-5_high_chunk | 통과 | 11 | 0 | 10 | 35/35 | True | $46.88 | $23.54 |
+| claude-opus-5-5_high_name | 통과 | 16 | 0 | 7 | 35/35 | True | $6.84 | $3.5 |
+| claude-opus-5-5_low_chunk | 통과 | 11 | 0 | 5 | 5/35 | True | $40.26 | $23.41 |
+| claude-opus-5-5_low_name | 통과 | 19 | 0 | 8 | 2/35 | True | $6.38 | $3.41 |
+| claude-sonnet-5-5_high_chunk | 통과 | 15 | 0 | 0 | 35/35 | True | $23.48 | $11.81 |
+| claude-sonnet-5-5_high_name | 통과 | 19 | 0 | 0 | 35/35 | True | $3.45 | $1.78 |
+| claude-sonnet-5-5_low_chunk | 통과 | 15 | 0 | 3 | 0/35 | True | $22.71 | $11.37 |
+| claude-sonnet-5-5_low_name | 통과 | 18 | 0 | 1 | 0/35 | True | $2.71 | $1.37 |

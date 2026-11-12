@@ -10,7 +10,7 @@ for f in sorted(glob.glob('runs/044/llm_rank_harness/claude-*/q*.json')):
         top = [int(x) for x in json.JSONDecoder().raw_decode(t[t.index('{'):])[0]['top']]
     except Exception:
         print('여전히 실패', f); continue
-    q = d['query']; clean = [x for x in top if x != q and 0 <= x < 668]
+    q = d['query']; clean = list(dict.fromkeys(x for x in top if x != q and 0 <= x < 668))
     d.update({'top_raw': top, 'parse_rule': "'A if False else B' -> B (11-12 승인)", 'self_in_top': q in top,
               'mate_rank': {str(m): (clean.index(m) + 1 if m in clean else None) for m in d['mates']}})
     json.dump(d, open(f, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

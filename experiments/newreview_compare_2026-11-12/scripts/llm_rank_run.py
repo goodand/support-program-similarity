@@ -54,7 +54,7 @@ for qi, (g, q) in enumerate(QS):
         top = [int(x) for x in json.JSONDecoder().raw_decode(res[res.index('{'):])[0]['top']]
     except Exception:
         pass
-    clean = [x for x in (top or []) if x != q and 0 <= x < len(R)]
+    clean = list(dict.fromkeys(x for x in (top or []) if x != q and 0 <= x < len(R)))  # 11-12: 같은 번호 반복은 첫 등장만(350개 응답 중 43개에 반복)
     rk = {str(m): (clean.index(m) + 1 if m in clean else None) for m in mates}
     out = {'qi': qi, 'group': g, 'query': q, 'mates': mates, 'mate_rank': rk, 'top_raw': top,
            'self_in_top': bool(top and q in top), 'invalid': [x for x in (top or []) if not 0 <= x < len(R)],

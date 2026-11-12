@@ -22,7 +22,7 @@ for d in sorted(p for p in O.iterdir() if p.is_dir() and p.name.startswith('clau
         r = json.load(open(f, encoding='utf-8')); g, q = QS[i]
         if (r['group'], r['query']) != (g, q): prob.append(f'{f.name}: 질의 불일치')
         if r['top_raw'] is None: prob.append(f'{f.name}: 응답 해석 실패'); last.append(None); continue
-        clean = [x for x in r['top_raw'] if x != q and 0 <= x < len(R)]
+        clean = list(dict.fromkeys(x for x in r['top_raw'] if x != q and 0 <= x < len(R)))  # 반복 번호는 첫 등장만
         rk = [clean.index(m) + 1 if m in clean else None for m in sorted(T[g] - {q})]
         last.append(None if None in rk else max(rk))
         if r.get('modelUsage') and model not in r['modelUsage']: prob.append(f'{f.name}: 모델 불일치 {list(r["modelUsage"])}')
