@@ -95,3 +95,12 @@
 !/release/selection.json
 !/experiments/db_chunks/config.json
 !/experiments/db_chunks/chunk_config.json
+
+# Database originals, SQL dumps and SQLite sidecar files.
+*.[sS][qQ][lL]
+*.[sS][qQ][lL][iI][tT][eE]
+*.[sS][qQ][lL][iI][tT][eE]3
+*.[dD][bB]
+*-wal
+*-shm
+*-journal
