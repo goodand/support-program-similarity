@@ -1,0 +1,281 @@
+{
+  "scope": "연구 결론에 영향을 주는 기존 주장의 목록. 논문은 방법론 수준 근거이며 로컬 효과 수치는 해당 패널 기록에만 귀속한다.",
+  "local_sources": [
+    "README.md",
+    "query_metrics.csv",
+    "logs/",
+    "eval_panel.json",
+    "research_references.json"
+  ],
+  "references": {
+    "rank": "https://proceedings.mlr.press/v130/reddi21a.html",
+    "loss": "https://proceedings.neurips.cc/paper_files/paper/2023/file/701eba0f98c6f28ffee0de5969d8d034-Supplemental-Datasets_and_Benchmarks.pdf",
+    "contrast": "https://aclanthology.org/2021.emnlp-main.552/",
+    "negative": "https://aclanthology.org/2025.findings-emnlp.481/",
+    "pool": "https://www.nist.gov/publications/retrieval-evaluation-incomplete-information",
+    "test": "https://aclanthology.org/2020.acl-main.442/",
+    "language": "https://aclanthology.org/2020.emnlp-main.618/",
+    "selection": "https://jmlr.org/papers/volume11/cawley10a/cawley10a.pdf",
+    "teacher": "https://aclanthology.org/2023.emnlp-main.923/"
+  },
+  "claims": [
+    {
+      "id": 1,
+      "module": "학습목표",
+      "method": "동일사업 쌍 지도",
+      "mechanism": "동일성 목표와 검색 관련성의 차이",
+      "local_evidence": "판별 정확도 93.10→93.66%, 검색 MAP 0.7206→0.6881",
+      "verdict": "이 조건에서 과제 간 개선이 전이되지 않았다. 동일사업 학습 전반의 실패는 아니다.",
+      "references": [
+        "contrast"
+      ]
+    },
+    {
+      "id": 2,
+      "module": "학습신호",
+      "method": "질의 내 상대 순위 증류",
+      "mechanism": "후보 두 개의 앞뒤를 손실로 학습",
+      "local_evidence": "재표집 5회 모두 기본 Decider MAP 초과, 4회 임베딩 초과",
+      "verdict": "고정 평가에서 반복됨. 다른 공고 일반화 미확인.",
+      "references": [
+        "rank"
+      ]
+    },
+    {
+      "id": 3,
+      "module": "학습신호",
+      "method": "교사 점수 직접 회귀",
+      "mechanism": "학생과 교사의 점수 척도 차이",
+      "local_evidence": "동일 5표본 평균 MAP 0.2092 대 순위학습 0.7758",
+      "verdict": "정규화·온도 보정·마진 회귀까지 열등하다는 주장은 철회.",
+      "references": [
+        "loss"
+      ]
+    },
+    {
+      "id": 4,
+      "module": "통제",
+      "method": "교사 순서 섞기",
+      "mechanism": "질의 내 선호 정보를 파괴",
+      "local_evidence": "원 파일럿 정상 MAP 0.7974, 무작위 10회 평균 0.0449",
+      "verdict": "순서 정보의 유용성을 지지. 교사 순서가 사람 정답이라는 뜻은 아니다.",
+      "references": [
+        "rank"
+      ]
+    },
+    {
+      "id": 5,
+      "module": "구현",
+      "method": "의도적 과적합",
+      "mechanism": "판독층이 훈련용 순서를 외울 수 있는지 검사",
+      "local_evidence": "8질의×4후보에서 48비교 중 34→48 일치",
+      "verdict": "구현 검사. 독립 평가가 아니다.",
+      "references": []
+    },
+    {
+      "id": 6,
+      "module": "검증",
+      "method": "미학습 질의 교사 일치",
+      "mechanism": "학생이 교사 선호를 재현하는 정도",
+      "local_evidence": "별도 16질의에서 87/96→86/96, 손실 0.258→0.281",
+      "verdict": "파일럿 검색 MAP 향상의 원인을 교사 모방 정확도 향상으로 확정할 수 없다.",
+      "references": [
+        "rank"
+      ]
+    },
+    {
+      "id": 7,
+      "module": "규모",
+      "method": "본 학습 중간 검증",
+      "mechanism": "학습 단계에 따른 교사 순서 일치",
+      "local_evidence": "0·116·232·347단계에 1202·1273·1283·1293/1536",
+      "verdict": "116단계는 향상이 처음 관측된 시점. 향상 시작점은 미상.",
+      "references": []
+    },
+    {
+      "id": 8,
+      "module": "규모",
+      "method": "파일럿 대 확대",
+      "mechanism": "표본 수·구성·학습량 동시 변화",
+      "local_evidence": "MAP 0.7974→0.7572, 최악 11→14위, AP 개선 6·동일 21·하락 8",
+      "verdict": "큰 데이터의 인과 효과는 미확인. 350/463단계에서 중단, 347단계로 평가.",
+      "references": [
+        "negative"
+      ]
+    },
+    {
+      "id": 9,
+      "module": "규모",
+      "method": "임베딩 대조학습 확대",
+      "mechanism": "양성·음성 구성 변화 가능성",
+      "local_evidence": "소규모가 우세했다는 사용자 관찰",
+      "verdict": "동일 조건 수치 재확인 전. 거짓 음성을 하락 원인으로 단정하지 않는다.",
+      "references": [
+        "contrast",
+        "negative"
+      ]
+    },
+    {
+      "id": 10,
+      "module": "표집",
+      "method": "질의당 후보 수",
+      "mechanism": "후보 수와 교사 순위 위치가 함께 변함",
+      "local_evidence": "2·4·8개 평균 MAP 0.7552·0.7757·0.7825",
+      "verdict": "4개는 비용상 선택. 최적이라는 근거 없음.",
+      "references": [
+        "loss"
+      ]
+    },
+    {
+      "id": 11,
+      "module": "입력",
+      "method": "임베딩 필드 제거",
+      "mechanism": "특정 입력 묶음 제거 후 성능 변화",
+      "local_evidence": "4필드 MAP 0.7538, 대상 제거 0.7432, 목적·내용 제거 0.6702",
+      "verdict": "목적·내용의 결합 효과. 각 필드 독립 가중치와 사람 선호는 미확인.",
+      "references": [
+        "test"
+      ]
+    },
+    {
+      "id": 12,
+      "module": "입력",
+      "method": "사람 비교표 청크",
+      "mechanism": "정보 종류·제시 순서가 동시에 달라짐",
+      "local_evidence": "347단계 동일 모델 35×667에서 MAP 0.7572→0.7400, 최악 14→15위",
+      "verdict": "규모상세 단독 효과와 새 입력으로 재학습한 효과는 미측정.",
+      "references": [
+        "test"
+      ]
+    },
+    {
+      "id": 13,
+      "module": "사례",
+      "method": "제목·대상·기관 마스킹",
+      "mechanism": "필드 제거에 대한 두 후보 상대 점수 민감도",
+      "local_evidence": "질의 513 창업교육−표준사업장 1.576; 제목 제거 −0.782, 수혜자 제거 1.067, 기관 제거 1.325",
+      "verdict": "양쪽 제목을 동시에 제거했다. 공통 접두어의 효과나 전체 후보 순위 변화는 미확인.",
+      "references": [
+        "test"
+      ]
+    },
+    {
+      "id": 14,
+      "module": "사례",
+      "method": "역전 원문 대조",
+      "mechanism": "제목·기관·대상 정보의 공변",
+      "local_evidence": "표준사업장 임베딩 4위, 학생 14위. 역전 10건 모두 대상유형 동일, 9건 기관 동일",
+      "verdict": "같은 기관이라는 사실만으로 인과 효과를 분리할 수 없다.",
+      "references": [
+        "test"
+      ]
+    },
+    {
+      "id": 15,
+      "module": "언어",
+      "method": "두 실패 질의 재표현",
+      "mechanism": "번역으로 어휘와 표현이 함께 변함",
+      "local_evidence": "영어에서 한 사례 11→6위, 다른 사례 9위 유지. 쉬운 한국어에서 두 순위 유지",
+      "verdict": "제한 후보 검사. Decider의 한국어 사전학습량 부족 주장 미검증.",
+      "references": [
+        "language"
+      ]
+    },
+    {
+      "id": 16,
+      "module": "EDA",
+      "method": "길이 매칭과 결정트리",
+      "mechanism": "길이·어휘 중첩이 라벨 또는 모델 선호의 대리 단서가 될 가능성",
+      "local_evidence": "사업군별 교차검증 14회에서 지원내용 어휘 겹침이 첫 분기라는 연구 기록",
+      "verdict": "설명모델의 분기는 Decider 내부 판단이나 실제 관련성의 원인으로 해석할 수 없다.",
+      "references": [
+        "test"
+      ]
+    },
+    {
+      "id": 17,
+      "module": "평가",
+      "method": "MAP와 마지막 정답",
+      "mechanism": "평균 정밀도와 알려진 정답의 최대 순위는 다른 속성",
+      "local_evidence": "347단계 대 임베딩 MAP 0.7572 대 0.7391, 최악 14 대 8. 질의 AP 승·동·패 10·16·9",
+      "verdict": "8위는 검토 예산이 아니다. 최악 순위는 알려진 정답에 한정.",
+      "references": [
+        "pool"
+      ]
+    },
+    {
+      "id": 18,
+      "module": "평가",
+      "method": "사후 전문가 추가 정답",
+      "mechanism": "판정한 후보를 고른 모델에 따른 선택 편향",
+      "local_evidence": "그룹 밖 214쌍 중 6점 이상 24쌍. 식별한 9쌍 추가시 347단계 MAP 0.8372",
+      "verdict": "나머지 15쌍 미식별. 새 정답 발굴률을 모든 후보로 외삽할 수 없다.",
+      "references": [
+        "pool"
+      ]
+    },
+    {
+      "id": 19,
+      "module": "평가",
+      "method": "전문가 선호와 사전 그룹 대조",
+      "mechanism": "수혜자와 실제 활동이 서로 다른 관련성 축",
+      "local_evidence": "같은 질의에서 보조기기 7.2, 표준사업장 3.7. 양 모델 모두 전자를 우선",
+      "verdict": "창업교육의 전문가 점수가 없어 사람 기준 3위의 타당성은 보류.",
+      "references": [
+        "pool"
+      ]
+    },
+    {
+      "id": 20,
+      "module": "평가",
+      "method": "교사 평가 이력 대조",
+      "mechanism": "반복 평가·모델 선택에 따른 선택 편향 가능성",
+      "local_evidence": "교사 학습 말뭉치와 질의 제목·전문 정확 일치 0. 과거 채점 51쌍 중 현재 30쌍 포함",
+      "verdict": "직접 누출 증거와 평가 재사용을 구분. 새 사업군 검증 필요.",
+      "references": [
+        "selection"
+      ]
+    },
+    {
+      "id": 21,
+      "module": "교사",
+      "method": "Astra·Claude 평가 및 증류 제안",
+      "mechanism": "추천자 자체의 성적과 학생에게 전달되는 신호는 다름",
+      "local_evidence": "Astra low 3회 평균 MAP 0.7874, Claude Opus high 기록 0.8153; Astra 32쌍 등급 준비",
+      "verdict": "이 수치로 Astra 교사 학생 모델의 개선을 주장할 수 없다. 활동·수혜자 분리 교시는 후속 가설.",
+      "references": [
+        "teacher"
+      ]
+    },
+    {
+      "id": 22,
+      "module": "활용",
+      "method": "예산 군집화",
+      "mechanism": "비슷한 사업을 같이 검토할 후보군으로 생성",
+      "local_evidence": "668개 구면 k-means, k=24, 초기값 3개에서 사전 30쌍 중 30·26·27쌍 같은 군집",
+      "verdict": "예산 절감·중복 확정·최적 군집 수 효과는 미측정.",
+      "references": []
+    },
+    {
+      "id": 23,
+      "module": "활용",
+      "method": "신규사업 선례 검색",
+      "mechanism": "이미 알려진 선례의 누락을 줄이는 업무 기준",
+      "local_evidence": "임베딩이 고정 패널의 최악 정답 순위에서 가장 앞섰다",
+      "verdict": "업무 목적에 따른 조건부 권고. 새 공고·실제 검토시간은 미검증.",
+      "references": [
+        "pool",
+        "selection"
+      ]
+    },
+    {
+      "id": 24,
+      "module": "대안",
+      "method": "마스킹 사전학습·QLoRA 등",
+      "mechanism": "학습 목표와 파라미터 업데이트 방식 구분",
+      "local_evidence": "고정 판독층 중심의 순위 비교",
+      "verdict": "1에폭 미만이라는 이유로 도메인 사전학습이라고 부를 수 없다. LoRA 대 QLoRA 우열도 미검증.",
+      "references": []
+    }
+  ]
+}
