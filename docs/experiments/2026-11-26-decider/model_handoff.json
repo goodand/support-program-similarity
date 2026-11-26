@@ -5,7 +5,6 @@
   "size_bytes": 5222480,
   "sha256": "fd349067dd5d7ac6583f0223819675d71bd08ca1fbbfb17ef54ec9a95d06a5be",
   "weight_distribution": "Hugging Face",
-  "upload_status_at_handoff": "user reported upload in progress; repository URL and revision unverified",
   "evaluation": {
     "queries": 35,
     "candidates_per_query": 667,
@@ -17,5 +16,11 @@
   "labels": "eval_panel.json",
   "evaluation_code": "logs/rank_distill_external.py",
   "claims": "claim_audit.json",
-  "corrections": "assistant_message_audit.json"
+  "corrections": "assistant_message_audit.json",
+  "hugging_face": {
+    "space": "goodantak/gov-program-similarity",
+    "revision": "13f80dfe227c7187a3600253601cbae7c2b028de",
+    "url": "https://huggingface.co/spaces/goodantak/gov-program-similarity/blob/13f80dfe227c7187a3600253601cbae7c2b028de/pplx-decider-pilot/pilot.safetensors",
+    "verification": "Remote LFS SHA-256 and size match the evaluated local checkpoint."
+  }
 }
