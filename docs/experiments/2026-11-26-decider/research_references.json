@@ -1,0 +1,70 @@
+{
+  "scope": "한국 지원사업 검색에서 관찰한 성적과 국제 원 논문의 방법론 근거를 분리한다.",
+  "entries": [
+    {
+      "module": "교사→판독층",
+      "method": "질의 내 후보 순위 증류",
+      "mechanism": "교사가 위에 둔 후보가 학생 점수에서도 위에 오도록 두 후보의 차이를 학습한다.",
+      "reference": {
+        "title": "RankDistil: Knowledge Distillation for Ranking",
+        "venue": "AISTATS 2021",
+        "url": "https://proceedings.mlr.press/v130/reddi21a.html"
+      },
+      "evidence_limit": "상위 순서를 전달하는 접근에 실험적 근거가 있다. RankDistil의 목록 손실과 우리 쌍별 손실은 다르다.",
+      "local_observation": "파일럿 MAP 0.7974, 기본 0.7206."
+    },
+    {
+      "module": "손실함수",
+      "method": "원점수 회귀와 순위 손실 비교",
+      "mechanism": "교사 점수의 척도와 변환에 따라 학생에게 전달되는 정보가 달라진다.",
+      "reference": {
+        "title": "RD-Suite: A Benchmark for Ranking Distillation",
+        "venue": "NeurIPS 2023",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2023/file/701eba0f98c6f28ffee0de5969d8d034-Supplemental-Datasets_and_Benchmarks.pdf"
+      },
+      "evidence_limit": "보충자료 그림 1의 점수 변환 비교. 모든 점수 증류가 순위학습보다 열등하다는 근거가 되지 않는다.",
+      "local_observation": "같은 5개 표본 평균 MAP는 순위 0.7758, 원점수 직접 회귀 0.2092."
+    },
+    {
+      "module": "임베딩",
+      "method": "대조학습의 양성·음성 구성",
+      "mechanism": "긍정 사례를 가깝게, 선택한 부정 사례를 멀게 학습한다. 어떤 관계를 양성으로 정했는지가 학습 목표를 정의한다.",
+      "reference": {
+        "title": "SimCSE: Simple Contrastive Learning of Sentence Embeddings",
+        "venue": "EMNLP 2021",
+        "url": "https://aclanthology.org/2021.emnlp-main.552/"
+      },
+      "evidence_limit": "원 연구의 함의·모순 문장쌍과 사업 동일성·유사성은 라벨 정의가 다르다.",
+      "local_observation": "동일사업 판별 학습 Decider MAP 0.6881. 이 결과는 대조학습 임베딩 자체의 실패를 뜻하지 않는다."
+    },
+    {
+      "module": "표본 구성",
+      "method": "어려운 음성 후보의 품질 검증",
+      "mechanism": "검색상 가까운 미판정 문서는 실제 관련 후보일 수 있어 음성 라벨로 쓰면 학습 신호가 충돌할 수 있다.",
+      "reference": {
+        "title": "Hard Negatives, Hard Lessons: Revisiting Training Data Quality for Robust Information Retrieval with LLMs",
+        "venue": "Findings of EMNLP 2025",
+        "url": "https://aclanthology.org/2025.findings-emnlp.481/"
+      },
+      "evidence_limit": "표본 품질을 통제할 이유다. 우리 확대 실험 하락 원인이 거짓 음성이었다는 증거는 없다.",
+      "local_observation": "규모 확대 347단계 MAP 0.7572. 파일럿과 표본 구성·학습 단계가 동시 변경됐다."
+    },
+    {
+      "module": "검색 평가",
+      "method": "불완전한 관련성 판정",
+      "mechanism": "판정 대상 선정과 누락 정도가 평가 지표의 안정성에 영향을 준다.",
+      "reference": {
+        "title": "Retrieval Evaluation with Incomplete Information",
+        "venue": "SIGIR 2004",
+        "url": "https://www.nist.gov/publications/retrieval-evaluation-incomplete-information"
+      },
+      "evidence_limit": "불완전한 판정에서 지표의 견고성을 시험했다. 우리 데이터의 편향 크기나 방향은 추정하지 않는다.",
+      "local_observation": "35질의·30개 무방향 사전 정답쌍. 추가 9건은 임베딩 상위 후보에서 발굴했다. 최악 순위는 알려진 정답에 한정한다."
+    }
+  ],
+  "open_hypotheses": [
+    "임베딩 파일럿의 확대 대비 우위는 사용자 보고이며 이 기록에서 대응 실험 수치를 재검산하지 않았다.",
+    "목적·지원활동·수혜자를 따로 비교하는 AI 교사가 사람 선호 일치를 개선한다는 가설은 미검증이다.",
+    "입력 필드 마스킹과 사람 비교표 형식의 성적은 현재 모델과 패널에서 관찰한 결과다."
+  ]
+}
