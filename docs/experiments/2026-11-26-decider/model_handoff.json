@@ -1,0 +1,21 @@
+{
+  "base_model": "pplx-decider-v1.2",
+  "selected_readout": "pilot.safetensors",
+  "checkpoint_kind": "rank-distilled readout for frozen backbone",
+  "size_bytes": 5222480,
+  "sha256": "fd349067dd5d7ac6583f0223819675d71bd08ca1fbbfb17ef54ec9a95d06a5be",
+  "weight_distribution": "Hugging Face",
+  "upload_status_at_handoff": "user reported upload in progress; repository URL and revision unverified",
+  "evaluation": {
+    "queries": 35,
+    "candidates_per_query": 667,
+    "prior_MAP": 0.7974,
+    "prior_worst_positive_rank": 11,
+    "expert_plus9_MAP": 0.8662
+  },
+  "inputs": "texts.json",
+  "labels": "eval_panel.json",
+  "evaluation_code": "logs/rank_distill_external.py",
+  "claims": "claim_audit.json",
+  "corrections": "assistant_message_audit.json"
+}
